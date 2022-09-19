@@ -1,0 +1,3 @@
+# 'v' Discord Bot (The Resurgence)
+
+I... uhhhh....
