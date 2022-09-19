@@ -4,6 +4,7 @@
   "description": "'v' Discord Bot",
   "main": "Bot.ts",
   "scripts": {
+    "start": "ts-node src/Bot.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kaildrai",
