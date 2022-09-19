@@ -2,4 +2,4 @@
 
 /package-lock.json
 
-/src/Global.ts
+/src/global/Global.ts

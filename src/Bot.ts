@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 
-import { TOKEN } from './Global'
+import { TOKEN } from './global/Global'
 
 import ready from './events/ready'
 import interactionCreate from "./events/interactionCreate";
