@@ -2,16 +2,15 @@ import { Client } from "discord.js";
 
 import { TOKEN } from './global/Global'
 
+import interactionCreate from "./events/interactionCreate"
 import ready from './events/ready'
-import interactionCreate from "./events/interactionCreate";
+import message from './events/message'
+import Intents from "./intents";
 
-console.log("I await your call, Master...")
+const client = new Client({ intents: [ Intents ] })
 
-const bot = new Client({
-	intents: []
-})
+ready(client)
+interactionCreate(client)
+message(client)
 
-ready(bot)
-interactionCreate(bot)
-
-bot.login(TOKEN)
+client.login(TOKEN)
