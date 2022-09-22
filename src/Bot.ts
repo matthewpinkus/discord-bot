@@ -1,4 +1,4 @@
-import { ActivityType, Client } from "discord.js";
+import { Client } from "discord.js";
 
 import { TOKEN } from './global/Global'
 

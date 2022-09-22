@@ -18,7 +18,6 @@ const handleSlashCommand = async (client: Client, interaction: CommandInteractio
     
     await interaction.deferReply();
     
-    // TODO: Also print WHO ran the command.
-    console.log(`${new Date().toUTCString()}\t /${interaction.commandName} called.`); 
+    console.log(`${new Date().toUTCString()}\t /${ interaction.commandName } called by ${ interaction.user.username} .`); 
     slashCommand.run(client, interaction);
 }; 
