@@ -1,9 +1,10 @@
-import { Client } from "discord.js";
+import { ActivityType, Client } from "discord.js";
 
 import { TOKEN } from './global/Global'
 
 import Intents from "./Intents";
 import { partials } from "./Partials";
+import { presence } from "./Presence";
 
 import interactionCreate from "./events/interactionCreate"
 import ready from './events/ready'
@@ -15,4 +16,6 @@ ready(client)
 interactionCreate(client)
 // message(client)
 
-client.login(TOKEN)
+client.login(TOKEN).then(() => {
+	client.user?.setPresence(presence)
+})
