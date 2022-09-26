@@ -1,13 +1,17 @@
 import { Client } from "discord.js";
 import { Commands } from "../commands/Commands";
 
+import { presence } from "../Presence";
+
 export default (client: Client): void => {
     client.on("ready", async () => {
         if (!client.user || !client.application) return;
-		console.log("I await your call, Master...\n")
+        // Set list of commands
+		await client.application.commands.set(Commands)
+        
+        // Set bot presence
+        client.user?.setPresence(presence)
 
-		await client.application.commands.set(Commands);
-
-        console.log(`${new Date().toUTCString()}\t${client.user.username} is online`);
+        console.log(`${client.user.username} has awoken at ${client.user.createdAt},\n\t\tI await your call, Master...\n`)
     });
 }; 
