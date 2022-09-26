@@ -5,6 +5,7 @@ import { Commands } from "../commands/Commands";
  * Client Command: (ADD MORE INFORMATION)
  */
 export default (client: Client): void => {
+
     client.on("interactionCreate", async (interaction: Interaction) => {
         if (interaction.isCommand() || interaction.isContextMenuCommand()) {
             await handleSlashCommand(client, interaction);
@@ -18,14 +19,15 @@ export default (client: Client): void => {
  * @param interaction 
  */
 const handleSlashCommand = async (client: Client, interaction: CommandInteraction): Promise<void> => {
+    
     const slashCommand = Commands.find(c => c.name === interaction.commandName);
     if (!slashCommand) {
-        interaction.followUp({ content: "An error has occurred following up with slash command." });
+        interaction.followUp({ content: "Error! Please try again or contact @kaildrai" });
         return;
     }   
     
-    await interaction.deferReply();
-    
+    await interaction.deferReply()
+
     console.log(`${new Date().toUTCString()}\t /${ interaction.commandName } called by ${ interaction.user.username }`); 
     slashCommand.run(client, interaction);
 }; 
