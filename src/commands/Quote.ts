@@ -8,9 +8,9 @@ import { Command } from "../global/Command";
 async function fetchQuotes(messages: MessageManager, lastId?: string) {
 
     if(!messages) throw new Error(`expected messages, got ${typeof messages}`)
-    // TODO: Stop re-creating collection every time you recurse through fetchQuotes(), save them somehow
     let collection = new Collection()
 
+    // TODO: Stop re-creating collection every time you recurse through fetchQuotes(), save them somehow
     try {
         if(lastId === undefined) {
             // Fetch first 100 messages.
@@ -63,6 +63,7 @@ export const Quote: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         const messages = (client.channels.cache.get(CHANNEL_IDS.QUOTES) as TextChannel).messages as MessageManager
         const collection = await fetchQuotes(messages)
+
         let quotes: string[] = []
 
         for (let val of collection.values()) {
