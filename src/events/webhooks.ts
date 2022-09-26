@@ -1,9 +1,8 @@
 import { Client, TextChannel } from "discord.js";
 
 import { getGames } from "epic-free-games/dist";
-import { resolve } from "path";
 import { CHANNEL_IDS } from "../global/Global";
-import { FreeEpicGame } from "../Types";
+import { FreeEpicGame } from "../global/Types";
 
 /**
  * Posts the current free games from the Epic Games Store to 
@@ -12,18 +11,18 @@ import { FreeEpicGame } from "../Types";
  */
 export async function postFreeGames(client: Client) {
 	
-	// TODO: Channel is 'undefined'. Fix this.
-	// const channel = client.channels.cache.get(CHANNEL_IDS.FREE_EPIC_GAMES) as TextChannel
-	const channel = client.channels.fetch(CHANNEL_IDS.FREE_EPIC_GAMES)
+	// TODO: Channel is 'undefined'. Fix this by creating a 
+	const channel = client.channels.cache.get(CHANNEL_IDS.FREE_EPIC_GAMES) as TextChannel	 
 	
 	retrieveFreeEpicGames().then((res) => {
 		res.forEach((t,d) => {
-			console.log(`Title: ${t.title}\nDescription: ${t.description}\nFinishes: ${t.effectiveDate}`)
-			const name: string = t.title as string
-			channel.send(name).then((res) => { console.log(res) })
+			// console.log(`Title: ${t.title}\nDescription: ${t.description}\nFinishes: ${t.effectiveDate}`)
+			const title: string = t.title as string
+			const des: string = t.description as string
+			const date: string = t.effectiveDate as string
+			// channel.send("test" as string)
 		})
 	})
-	// channel.send("test" as string)
 }
 
 /**

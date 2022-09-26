@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { GUILD_ID } from "../global/Global";
 import { Commands } from "../commands/Commands";
 
-import { presence } from "../Presence";
+import { presence } from "../bot/Presence";
 
 /**
  * Client has connected and is ready to use.

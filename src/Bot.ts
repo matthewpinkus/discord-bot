@@ -2,8 +2,8 @@ import { Client } from "discord.js";
 
 import { TOKEN } from './global/Global'
 
-import Intents from "./Intents";
-import { partials } from "./Partials";
+import Intents from "./bot/Intents";
+import { partials } from "./bot/Partials";
 
 import interactionCreate from "./events/interactionCreate"
 import ready from './events/ready'
