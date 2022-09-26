@@ -1,6 +1,9 @@
 import { CommandInteraction, Client, Interaction } from "discord.js";
 import { Commands } from "../commands/Commands";
 
+/**
+ * Client Command: (ADD MORE INFORMATION)
+ */
 export default (client: Client): void => {
     client.on("interactionCreate", async (interaction: Interaction) => {
         if (interaction.isCommand() || interaction.isContextMenuCommand()) {
@@ -9,6 +12,11 @@ export default (client: Client): void => {
     });
 };
 
+/**
+ * Find the command that was requested, (ADD MORE INFORMATION)
+ * @param client 
+ * @param interaction 
+ */
 const handleSlashCommand = async (client: Client, interaction: CommandInteraction): Promise<void> => {
     const slashCommand = Commands.find(c => c.name === interaction.commandName);
     if (!slashCommand) {

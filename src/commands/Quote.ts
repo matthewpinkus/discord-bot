@@ -2,7 +2,11 @@ import { CommandInteraction, Client, TextChannel, MessageManager, Collection } f
 import { CHANNEL_IDS } from "../global/Global";
 import { Command } from "../global/Command";
 
+/**
+ * Recursive function that fetches ALL messages from a collection of messages
+ */
 async function fetchQuotes(messages: MessageManager, lastId?: string) {
+
     if(!messages) throw new Error(`expected messages, got ${typeof messages}`)
     // TODO: Stop re-creating collection every time you recurse through fetchQuotes(), save them somehow
     let collection = new Collection()
@@ -10,6 +14,7 @@ async function fetchQuotes(messages: MessageManager, lastId?: string) {
     try {
         if(lastId === undefined) {
             // Fetch first 100 messages.
+            // TODO: Find a way to only fetch messages once in this function
             await messages.fetch({ limit:100 }).then((res) => {
                 res.map((msg) => {
                     // I only want messages from channel that are quotes 
@@ -30,40 +35,41 @@ async function fetchQuotes(messages: MessageManager, lastId?: string) {
                     collection.set(msg.id, msg.content)
                 }
             })
+            lastId = collection.lastKey() as string
         })
 
         lastId = collection.lastKey() as string
         if (lastId !== '123232732900753413'){
             try {
-                await fetchQuotes(messages, lastId, collection)
+                await fetchQuotes(messages, lastId)
             } catch(e) {
                 console.log(e)
             }
         }
-
     } catch(e) { 
         console.log(e) 
     }
     return collection
 }
 
+/**
+ * Command: /quote  
+ * Lists a random quote from the '#quotes' channel
+ */
 export const Quote: Command = {
+
     name: "quote",
     description: "Random quote from #quotes",
     run: async (client: Client, interaction: CommandInteraction) => {
-        const channel = client.channels.cache.get(CHANNEL_IDS.QUOTES) as TextChannel
-        const messages = channel.messages as MessageManager
-        // Collection of id/message pairs
+        const messages = (client.channels.cache.get(CHANNEL_IDS.QUOTES) as TextChannel).messages as MessageManager
         const collection = await fetchQuotes(messages)
         let quotes: string[] = []
 
         for (let val of collection.values()) {
             quotes.push(val as string) 
         }
-        console.log(quotes.length)
 
         const content = `> ${quotes[Math.floor(Math.random() * quotes.length - 1)]}`
-        
         await interaction.followUp({
             ephemeral: false,
             content
