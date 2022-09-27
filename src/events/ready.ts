@@ -1,7 +1,6 @@
 import { Client } from "discord.js";
-import { GUILD_ID } from "../global/Global";
-import { Commands } from "../commands/Commands";
 
+import { Commands } from "../commands/Commands";
 import { presence } from "../bot/Presence";
 
 /**

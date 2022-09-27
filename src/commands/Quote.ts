@@ -1,6 +1,7 @@
 import { CommandInteraction, Client, TextChannel, MessageManager, Collection } from "discord.js";
-import { CHANNEL_IDS } from "../global/Global";
+
 import { Command } from "../global/Command";
+import { CHANNEL_IDS } from "../global/Global";
 
 /**
  * Recursive function that fetches ALL messages from a collection of messages
