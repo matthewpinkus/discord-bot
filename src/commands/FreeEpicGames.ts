@@ -22,9 +22,7 @@ async function retrieveFreeEpicGames(): Promise<Array<FreeEpicGame>> {
 		res.currentGames.map((game) => {
 			const end = game.effectiveDate.substring(0, game.effectiveDate.indexOf('T'))
 		
-			game.keyImages.map((img) => {
-				if (img.type === 'Thumbnail') thumbnails.push(img.url)
-			})
+			game.keyImages.map((img) => { if (img.type === 'Thumbnail') thumbnails.push(img.url) })
 
 			games.push({
 				title: game.title,
@@ -57,6 +55,7 @@ async function postFreeGames(client: Client) {
 			const desc: string = t.description as string
 			const date: string = t.effectiveDate as string
 			const img : string = t.img as string
+
 			channel.send(`${img}`)
 			channel.send(`**${title}**\n*Offer ends ${date}*\n\n> ${desc}`)
 		})
@@ -75,6 +74,7 @@ export const ListFreeGames: Command = {
 
     run: async (client: Client, interaction: CommandInteraction) => {
 
+		// TODO: Add a way to check if games have been updated
 		await postFreeGames(client)
 	
     }
