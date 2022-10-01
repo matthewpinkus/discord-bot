@@ -1,4 +1,5 @@
 import { CommandInteraction, Client, PermissionsBitField } from "discord.js";
+import { formatDate } from "../global/Utils";
 import { Command } from "../global/Command";
 
 /**
@@ -13,6 +14,7 @@ export const Test: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         const content = "I hope this worked for you.";
 
+        formatDate('2022-08-12')
         await interaction.followUp({
             ephemeral: true,
             content

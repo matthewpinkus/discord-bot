@@ -12,7 +12,8 @@ import { getGames } from "epic-free-games/dist";
  * with the game title, description, and date the free sale ends.
  * @returns Array of type 'FreeEpicGame' with current free game information.
  */
-// TODO: Fix the date to read '<day> the <day>, <month>'
+// TODO: Fix the date to read '<day> the <date>, <month>'
+// TODO: The dates are wrong :thinking:
 async function retrieveFreeEpicGames(): Promise<Array<FreeEpicGame>> {
 	const games: Array<FreeEpicGame> = []
 	const thumbnails: string[] = []
