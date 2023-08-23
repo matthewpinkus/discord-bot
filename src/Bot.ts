@@ -1,7 +1,5 @@
 import { Client } from "discord.js";
 
-import { TOKEN } from './global/Global'
-
 import Intents from "./bot/Intents";
 import { partials } from "./bot/Partials";
 
@@ -13,4 +11,4 @@ const client = new Client({ intents: [ Intents ], partials: [ partials ] })
 ready(client)
 interactionCreate(client)
 
-client.login(TOKEN)
+client.login(process.env.TOKEN)
