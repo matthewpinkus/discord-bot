@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 
 import { Commands } from "../commands/Commands";
-import { CHANNEL_IDS } from "../global/Global";
+import { CHANNEL_IDS, DISCORD_IDS } from "../global/Global";
 
 /**
  * Client Command: (ADD MORE INFORMATION)
@@ -31,7 +31,9 @@ const handleSlashCommand = async (
   const slashCommand = Commands.find((c) => c.name === interaction.commandName);
   if (!slashCommand) {
     interaction.followUp({
-      content: "Error! Please try again or contact @kaildrai",
+      content: `Error! Please try again or contact ${client.users.cache.get(
+        DISCORD_IDS.MATTHEW
+      )}`,
     });
     return;
   }
