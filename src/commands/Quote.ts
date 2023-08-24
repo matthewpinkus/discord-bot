@@ -4,7 +4,9 @@ import { Command } from "../global/Command";
 import { CHANNEL_IDS } from "../global/Global";
 
 /**
- * Fetch ALL messages from a collection of messages
+ * Used for fetching quotes from the #quotes channel
+ * @param channel Channel to fetch all quotes from
+ * @returns Array of type string full of quotes
  */
 async function fetchQuotes(channel: TextChannel) {
   let messages: string[] = [];

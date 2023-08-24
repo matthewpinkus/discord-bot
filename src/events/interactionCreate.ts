@@ -13,7 +13,11 @@ import { CHANNEL_IDS, DISCORD_IDS } from "../global/Global";
  */
 export default (client: Client): void => {
   client.on("interactionCreate", async (interaction: Interaction) => {
-    if (interaction.isCommand() || interaction.isContextMenuCommand()) {
+    if (
+      interaction.isCommand() ||
+      interaction.isContextMenuCommand() ||
+      interaction.isChatInputCommand()
+    ) {
       await handleSlashCommand(client, interaction);
     }
   });
@@ -45,6 +49,7 @@ const handleSlashCommand = async (
       interaction.user.username
     }`
   );
+
   (client.channels.cache.get(CHANNEL_IDS.COMMAND_HISTORY) as TextChannel).send(
     `*/${interaction.commandName}* called by **${interaction.user}**`
   );
