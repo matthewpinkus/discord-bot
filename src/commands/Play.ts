@@ -10,12 +10,12 @@ export const Play: Command = {
   name: "play",
   description: "Play some type of music",
   run: async (client: Client, interaction: CommandInteraction) => {
-    const content = `Now playing {song}`;
     const player = useMainPlayer();
     const channel = interaction.channel;
 
     console.log(interaction.channel);
 
+    const content = `Now playing {song}`;
     await interaction.followUp({
       ephemeral: true,
       content,
