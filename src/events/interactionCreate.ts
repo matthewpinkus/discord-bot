@@ -46,7 +46,7 @@ const handleSlashCommand = async (
     }`
   );
   (client.channels.cache.get(CHANNEL_IDS.COMMAND_HISTORY) as TextChannel).send(
-    `'*/${interaction.commandName}*' called by **${interaction.user}**`
+    `*/${interaction.commandName}* called by **${interaction.user}**`
   );
   slashCommand.run(client, interaction);
 };

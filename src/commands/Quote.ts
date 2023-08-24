@@ -1,35 +1,31 @@
-import {
-  CommandInteraction,
-  Client,
-  TextChannel,
-  MessageManager,
-  Collection,
-} from "discord.js";
+import { CommandInteraction, Client, TextChannel } from "discord.js";
 
 import { Command } from "../global/Command";
-import { CHANNEL_IDS, MESSAGE_IDS } from "../global/Global";
+import { CHANNEL_IDS } from "../global/Global";
+
 /**
- * Recursive function that fetches ALL messages from a collection of messages
+ * Fetch ALL messages from a collection of messages
  */
-async function fetchQuotes(messages: MessageManager) {
-  let collection = new Collection();
-  let next_quote: string = MESSAGE_IDS.EARLIEST_QUOTE;
+async function fetchQuotes(channel: TextChannel) {
+  let messages: string[] = [];
 
-  // while(next_quote !== null) {
-  await messages
-    .fetch({ limit: 100, after: next_quote, cache: true })
-    .then((res) => {
-      res.map((msg) => {
-        if (collection.has(msg.id)) return collection;
-        if (msg.content.startsWith('"') || msg.content.startsWith("http")) {
-          collection.set(msg.id, msg.content);
-          next_quote = msg.id;
-        }
+  let pointer = await channel.messages
+    .fetch({ limit: 1 })
+    .then((index) => (index.size === 1 ? index.at(0) : null));
+
+  while (pointer) {
+    await channel.messages
+      .fetch({ limit: 100, before: pointer.id, cache: true })
+      .then((page) => {
+        page.forEach((msg) => {
+          if (msg.content.startsWith('"') || msg.content.startsWith("http"))
+            messages.push(msg.content);
+        });
+        pointer = 0 < page.size ? page.at(page.size - 1) : null;
       });
-    });
-  // }
+  }
 
-  return collection;
+  return messages;
 }
 
 /**
@@ -40,17 +36,11 @@ export const Quote: Command = {
   name: "quote",
   description: "Random quote from #quotes",
   run: async (client: Client, interaction: CommandInteraction) => {
-    const messages = (
-      client.channels.cache.get(CHANNEL_IDS.QUOTES) as TextChannel
-    ).messages as MessageManager;
-    const collection = await fetchQuotes(messages);
+    const channel = client.channels.cache.get(
+      CHANNEL_IDS.QUOTES
+    ) as TextChannel;
+    const quotes: string[] = await fetchQuotes(channel);
 
-    const quotes: string[] = [];
-
-    // TODO: Format the quote
-    for (let val of collection.values()) {
-      quotes.push(val as string);
-    }
     console.log(`size of all quotes fetched: ${quotes.length}`);
 
     const content = `> ${
