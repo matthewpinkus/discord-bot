@@ -2,17 +2,16 @@
 import {
   CommandInteraction,
   ChatInputApplicationCommandData,
-  Client,
-  ChatInputCommandInteraction,
+  Client
 } from "discord.js";
 
 export interface Command extends ChatInputApplicationCommandData {
-  run: (client: Client, interaction: CommandInteraction ) => void;
+  run: (client: Client, interaction: CommandInteraction) => void;
 }
 
 export interface SubCommand extends ChatInputApplicationCommandData {
   run: (
     client: Client,
-    interaction: CommandInteraction 
+    interaction: CommandInteraction
   ) => void;
 }

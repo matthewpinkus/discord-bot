@@ -45,8 +45,7 @@ const handleSlashCommand = async (
   await interaction.deferReply();
 
   console.log(
-    `${new Date().toUTCString()}\t /${interaction.commandName} called by ${
-      interaction.user.username
+    `${new Date().toUTCString()}\t /${interaction.commandName} called by ${interaction.user.username
     }`
   );
 

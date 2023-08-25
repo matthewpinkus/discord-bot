@@ -45,9 +45,8 @@ export const Quote: Command = {
 
     console.log(`size of all quotes fetched: ${quotes.length}`);
 
-    const content = `> ${
-      quotes[Math.floor(Math.random() * quotes.length - 1)]
-    }`;
+    const content = `> ${quotes[Math.floor(Math.random() * quotes.length - 1)]
+      }`;
     await interaction.followUp({
       ephemeral: false,
       content,
