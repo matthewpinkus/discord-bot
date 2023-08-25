@@ -10,7 +10,7 @@ import OpenAI from "openai";
 async function askGPT(message: string, type: string): Promise<string> {
   let reply: string | null = `> ${message}\n\n`;
   const openai = new OpenAI({
-    organization: "org-36nsiWiX5QecVXOt8URBObtV",
+    organization: process.env.OPENAI_ORGANIZATION,
     apiKey: process.env.OPENAI_KEY,
   });
 
@@ -88,8 +88,8 @@ export const GPT: Command = {
       if (interaction.options.data[0] === undefined) {
         content = "Please ask me something"
       } else {
-        const type: string = interaction.options.data[0].name.toString()!
-        const question: string = interaction.options.data[0].value?.toString()!
+        const type: string = interaction.options.data[0].name as string
+        const question: string = interaction.options.data[0].value as string
 
         content = await askGPT(question, type)
       }
