@@ -11,4 +11,4 @@ const client = new Client({ intents: [Intents], partials: [partials] });
 ready(client);
 interactionCreate(client);
 
-client.login(process.env.TOKEN);
+client.login(process.env.DISCORD_TOKE);

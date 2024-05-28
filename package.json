@@ -11,11 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@discord-player/extractor": "^4.4.1",
-    "discord-player": "^6.6.2",
     "discord.js": "^14.13.0",
-    "epic-free-games": "^3.1.1",
-    "openai": "^4.0.0",
-    "ytdl-core": "^4.11.5"
+    "openai": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.18",
