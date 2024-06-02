@@ -11,7 +11,7 @@ async function askGPT(message: string, type: string): Promise<string> {
   let reply: string | null = `> ${message}\n\n`;
   const openai = new OpenAI({
     organization: process.env.OPENAI_ORGANIZATION,
-    apiKey: process.env.OPENAI_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
   if (type == "ask") {
