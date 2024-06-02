@@ -6,11 +6,9 @@ import {
 } from "discord.js";
 
 import { Command } from "../global/Command";
-import { CHANNEL_IDS } from "../global/Global";
 
 import { FreeEpicGame } from "../global/Types";
 
-import { getGames } from "epic-free-games/dist";
 
 /**
  * Retrieves a list of the current free games on the Epic Games store
@@ -21,57 +19,27 @@ import { getGames } from "epic-free-games/dist";
 // TODO: The dates are wrong :thinking:
 async function retrieveFreeEpicGames(): Promise<Array<FreeEpicGame>> {
   const games: Array<FreeEpicGame> = [];
-  const thumbnails: string[] = [];
-  let count = 0;
-  await getGames("US", true).then((res) => {
-    res.currentGames.map((game) => {
-      const end = game.effectiveDate.substring(
-        0,
-        game.effectiveDate.indexOf("T")
-      );
-
-      game.keyImages.map((img) => {
-        if (img.type === "Thumbnail") thumbnails.push(img.url);
-      });
+  await fetch("https://store-site-backend-static-ipv4.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=AU&allowCountries=AU")
+  .then((res) => res.json())
+  .then((data) => {
+    const freeGames = data.data.Catalog.searchStore.elements;
+    freeGames.forEach((game: any) => {
+      const title: string = game.title as string;
+      const desc: string = game.description as string;
+      const date: string = game.effectiveDate as string;
+      const img: string = game.keyImages[0].url as string;
 
       games.push({
-        title: game.title,
-        description: game.description,
-        effectiveDate: end,
-        img: thumbnails[count],
+        title: title,
+        description: desc,
+        effectiveDate: date,
+        img: img,
       });
-
-      count++;
     });
   });
   return games;
 }
 
-/**
- * Posts the current free games from the Epic Games Store to
- * a specific channel for the purpose. ('CHANNEL_IDS.FREE_EPIC_GAMES')
- * @param client valid 'discord-js' Client object
- */
-
-// TODO: Put this on a timer once server is re-dockerized
-async function postFreeGames(client: Client) {
-  const channel = client.channels.cache.get(
-    CHANNEL_IDS.FREE_EPIC_GAMES
-  ) as TextChannel;
-
-  retrieveFreeEpicGames().then((res) => {
-    res.forEach((t, d) => {
-      // TODO: Add a link to the game
-      const title: string = t.title as string;
-      const desc: string = t.description as string;
-      const date: string = t.effectiveDate as string;
-      const img: string = t.img as string;
-
-      channel.send(`${img}`);
-      channel.send(`**${title}**\n*Offer ends ${date}*\n\n> ${desc}`);
-    });
-  });
-}
 
 /**
  * Posts the current free games from the Epic Games Store to a specific
@@ -84,6 +52,6 @@ export const ListFreeGames: Command = {
 
   run: async (client: Client, interaction: CommandInteraction) => {
     // TODO: Add a way to check if games have been updated
-    await postFreeGames(client);
+    await retrieveFreeEpicGames();
   },
 };
