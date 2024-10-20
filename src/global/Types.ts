@@ -1,6 +1,7 @@
 export interface FreeEpicGame {
-	title?: string
-	description?: string
-	effectiveDate?: string
-	img?: string
+	title?: string,
+	url?: string,
+	description?: string,
+	effectiveDate?: Date,
+	thumbnail?: string
 }
